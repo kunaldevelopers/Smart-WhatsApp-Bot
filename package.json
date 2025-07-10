@@ -1,0 +1,22 @@
+{
+  "name": "my-local-ai",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@langchain/community": "^0.3.39",
+    "chalk": "^5.4.1",
+    "fs": "^0.0.1-security",
+    "langchain": "^0.3.20",
+    "node-fetch": "^3.3.2",
+    "ollama": "^0.5.14",
+    "openai": "^4.91.1",
+    "ora": "^8.2.0",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.31.0",
+    "winston": "^3.17.0"
+  }
+}
