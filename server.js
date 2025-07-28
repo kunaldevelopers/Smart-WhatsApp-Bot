@@ -13,7 +13,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import http from "http";
 import express from "express";
-import qrcode from "qrcode-terminal";
+// import qrcode from "qrcode-terminal"; // REMOVED - not needed for web interface
 import chalk from "chalk";
 import ora from "ora";
 import winston from "winston";
@@ -36,6 +36,9 @@ let botStatus = {
   logs: [],
 };
 
+// QR generation flag to prevent duplicates
+let qrGenerated = false;
+
 // Middleware
 app.use(express.json());
 app.use(express.static("public"));
@@ -51,6 +54,16 @@ app.get("/api/status", (req, res) => {
 
 app.get("/api/auth-status", (req, res) => {
   res.json({ authenticated: botStatus.authenticated });
+});
+
+// Test endpoint to verify QR code generation
+app.get("/api/test-qr", (req, res) => {
+  res.json({
+    hasQR: !!botStatus.qr,
+    status: botStatus.status,
+    qrLength: botStatus.qr ? botStatus.qr.length : 0,
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // Helper function to add logs
@@ -160,7 +173,15 @@ const client = new Client({
 
 // Show QR code
 client.on("qr", (qr) => {
-  console.log(chalk.cyan.bold("[QR] Scan this to Connect:"));
+  // Prevent duplicate QR generation logging
+  if (qrGenerated) {
+    console.log(chalk.gray("[QR] QR code refreshed"));
+    botStatus.qr = qr; // Update QR data
+    return;
+  }
+
+  qrGenerated = true;
+  console.log(chalk.cyan.bold("[QR] WhatsApp QR Code Ready!"));
 
   // Show the correct URL based on environment
   const webUrl = process.env.RAILWAY_PUBLIC_DOMAIN
@@ -168,8 +189,10 @@ client.on("qr", (qr) => {
     : `http://localhost:${PORT}`;
   console.log(chalk.yellow(`[Info] QR Code available at: ${webUrl}`));
   console.log(chalk.magenta.bold(`🌐 SCAN HERE: ${webUrl}`));
+  console.log(chalk.green("📱 Open the web interface to scan the QR code"));
 
-  qrcode.generate(qr, { small: true });
+  // DON'T generate QR in terminal - only on web interface
+  // qrcode.generate(qr, { small: true }); // REMOVED
 
   // Update bot status for web interface
   botStatus.status = "qr_ready";
@@ -191,6 +214,9 @@ client.on("auth_failure", (msg) => {
   console.log(
     chalk.yellow("[Action] Clearing session and regenerating QR code...")
   );
+
+  // Reset QR flag to allow new QR generation
+  qrGenerated = false;
 
   // Update bot status
   botStatus.status = "auth_failure";

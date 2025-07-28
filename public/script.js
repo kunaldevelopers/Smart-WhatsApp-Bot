@@ -39,28 +39,25 @@ class WhatsAppBotUI {
       "Establishing connection with the bot server."
     );
 
-    // Simulate connection process
-    setTimeout(() => {
-      this.addLog("success", "Connected to bot server successfully");
-      this.updateStatus(
-        "loading",
-        "Initializing WhatsApp Client...",
-        "Setting up WhatsApp Web connection."
-      );
-      this.startStatusPolling();
-    }, 2000);
+    // Start polling immediately instead of waiting
+    this.startStatusPolling();
   }
 
   startStatusPolling() {
-    // Poll for bot status every 3 seconds
+    // Poll for bot status every 1 second initially
     const pollInterval = setInterval(async () => {
       try {
+        console.log("Polling for status...");
         const response = await fetch("/api/status");
         const data = await response.json();
+        console.log("Status data:", data);
 
-        if (data.status === "qr_ready" && data.qr && !this.qrCodeGenerated) {
-          this.showQRCode(data.qr);
-          this.qrCodeGenerated = true;
+        if (data.status === "qr_ready" && data.qr) {
+          if (!this.qrCodeGenerated) {
+            console.log("QR Code ready, showing QR code...");
+            this.showQRCode(data.qr);
+            this.qrCodeGenerated = true;
+          }
         } else if (data.status === "authenticated") {
           this.showSuccess();
           clearInterval(pollInterval);
@@ -70,7 +67,7 @@ class WhatsAppBotUI {
         }
 
         // Update logs if available
-        if (data.logs) {
+        if (data.logs && data.logs.length > 0) {
           data.logs.forEach((log) => {
             this.addLog(log.level, log.message);
           });
@@ -82,7 +79,7 @@ class WhatsAppBotUI {
           setTimeout(() => this.simulateQRGeneration(), 3000);
         }
       }
-    }, 3000);
+    }, 1000); // Poll every 1 second instead of 3
   }
 
   simulateQRGeneration() {
@@ -116,6 +113,7 @@ class WhatsAppBotUI {
   }
 
   showQRCode(qrData) {
+    console.log("showQRCode called with data:", qrData);
     this.addLog("success", "QR code generated successfully");
     this.updateStatus(
       "loading",
@@ -127,36 +125,96 @@ class WhatsAppBotUI {
     const qrLoading = document.getElementById("qrLoading");
     const qrCodeDiv = document.getElementById("qrcode");
 
+    console.log("Elements found:", { qrSection, qrLoading, qrCodeDiv });
+
     // Show QR section
     qrSection.style.display = "block";
 
-    // Generate QR code
-    QRCode.toCanvas(
-      qrCodeDiv,
-      qrData,
-      {
-        width: 256,
-        height: 256,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.M,
-      },
-      (error) => {
-        if (error) {
-          console.error("QR Code generation error:", error);
-          this.addLog("error", "Failed to generate QR code");
-          return;
-        }
+    // Clear any existing QR code
+    qrCodeDiv.innerHTML = "";
 
-        // Hide loading, show QR code
+    // Check if QRCode library is available
+    if (typeof QRCode === "undefined") {
+      console.error(
+        "QRCode library not loaded! Trying alternative approach..."
+      );
+      this.addLog("error", "QR Code library not loaded, using fallback");
+
+      // Fallback: use Google Charts API
+      const qrImg = document.createElement("img");
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(
+        qrData
+      )}`;
+      qrImg.style.borderRadius = "10px";
+      qrImg.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
+      qrImg.onload = () => {
         qrLoading.style.display = "none";
         qrCodeDiv.style.display = "block";
-        this.addLog("info", "QR code ready for scanning");
-
-        // Start checking for authentication
+        this.addLog("info", "QR code ready for scanning (fallback method)");
         this.startAuthenticationCheck();
-      }
-    );
+      };
+      qrImg.onerror = () => {
+        this.addLog("error", "Failed to generate QR code with fallback method");
+      };
+      qrCodeDiv.appendChild(qrImg);
+      return;
+    }
+
+    console.log("Generating QR code with QRCode library...");
+
+    // Try to generate QR code with the library
+    try {
+      QRCode.toCanvas(
+        qrData,
+        {
+          width: 256,
+          height: 256,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.M,
+        },
+        (error, canvas) => {
+          if (error) {
+            console.error("QR Code generation error:", error);
+            this.addLog("error", "Failed to generate QR code");
+            return;
+          }
+
+          console.log("QR Code generated successfully!");
+          // Clear the div and add the canvas
+          qrCodeDiv.innerHTML = "";
+          canvas.style.borderRadius = "10px";
+          canvas.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
+          qrCodeDiv.appendChild(canvas);
+
+          // Hide loading, show QR code
+          qrLoading.style.display = "none";
+          qrCodeDiv.style.display = "block";
+          this.addLog("info", "QR code ready for scanning");
+
+          // Start checking for authentication
+          this.startAuthenticationCheck();
+        }
+      );
+    } catch (libError) {
+      console.error("QRCode library error:", libError);
+      this.addLog("error", "QR library failed, using fallback");
+
+      // Fallback method
+      const qrImg = document.createElement("img");
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(
+        qrData
+      )}`;
+      qrImg.style.borderRadius = "10px";
+      qrImg.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
+      qrImg.onload = () => {
+        qrLoading.style.display = "none";
+        qrCodeDiv.style.display = "block";
+        this.addLog("info", "QR code ready for scanning (fallback method)");
+        this.startAuthenticationCheck();
+      };
+      qrCodeDiv.appendChild(qrImg);
+    }
   }
 
   startAuthenticationCheck() {
