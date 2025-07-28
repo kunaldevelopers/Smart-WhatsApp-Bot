@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "echo 'No build step required for this Node.js application'",
+    "dev": "node server.js"
   },
   "dependencies": {
     "@langchain/community": "^0.3.39",
