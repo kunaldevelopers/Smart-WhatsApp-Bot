@@ -2,141 +2,58 @@
 
 EnegiX Global is a dynamic technology company headquartered in Ranchi, Jharkhand, India, near Bharat Kitchen, Kadru. We specialize in delivering innovative, affordable, and results-driven digital solutions to empower businesses of all sizes to thrive in the digital landscape. Our name, EnegiX Global, embodies our core philosophy: Energy + Innovation = Excellence. From startups to enterprises, we transform tech challenges into opportunities, bridging the gap between businesses and cutting-edge technologies.
 
----
+## EnegiX Global – Overview
 
-## Company Overview
+Location: Kadru, Ranchi, Jharkhand  
+Map: https://maps.app.goo.gl/55imyiJMbH7P3zwh9
 
-- Name: EnegiX Global
-- Location: House No. 2, Old AG More, near Bharat Kitchen, above Saryu Sons Jewellers, Kadru, Delatoli, Ranchi, Jharkhand 834002, India.  
-  - Google Maps: [Find us here](https://maps.app.goo.gl/55imyiJMbH7P3zwh9)
-  - Situated in Ranchi’s vibrant tech hub, our office is easily accessible for clients and collaborators.
-- Mission: To democratize technology by providing innovative, affordable solutions that empower businesses digitally. We aim to transform complex challenges into opportunities, driving digital success one solution at a time.
-- Vision: To be a global leader in digital transformation, delivering impactful solutions that drive business growth and innovation.
+Mission: Deliver affordable tech solutions that simplify challenges and empower growth.
 
----
+Vision: Lead global digital transformation with innovative business solutions.
 
 ## Our Services
 
-EnegiX Global offers a comprehensive suite of technology and digital marketing services tailored to meet the needs of modern businesses. Below is a detailed breakdown of our offerings, including estimated pricing in INR (based on standard market rates in India, subject to customization based on project scope):
-
-### 1. Web & App Development Services
-- Custom Website Design & Development: Responsive, mobile-friendly websites built with modern frameworks.  
-  - Estimated Price: ₹25,000 - ₹1,50,000 (depending on complexity)
-- Mobile App Development (Android & iOS): Native and cross-platform apps for seamless user experiences.  
-  - Estimated Price: ₹1,00,000 - ₹5,00,000 (per platform)
-- E-commerce Website Development: Fully functional online stores with payment gateways and inventory management.  
-  - Estimated Price: ₹50,000 - ₹3,00,000
-- Web Application Development: Scalable apps using MERN, MEAN, or PHP stacks.  
-  - Estimated Price: ₹75,000 - ₹4,00,000
-- CMS-Based Website Solutions: WordPress, Joomla, or Drupal-based websites with easy content management.  
-  - Estimated Price: ₹20,000 - ₹1,00,000
-- Progressive Web App (PWA) Development: Fast, reliable, and engaging web apps.  
-  - Estimated Price: ₹50,000 - ₹2,00,000
-- API Integration & Development: Custom APIs for seamless connectivity.  
-  - Estimated Price: ₹30,000 - ₹1,50,000
-- UI/UX Design & Optimization: User-centric designs for enhanced experiences.  
-  - Estimated Price: ₹20,000 - ₹1,00,000
-- Website Maintenance & Support: Ongoing updates and technical support.  
-  - Estimated Price: ₹5,000 - ₹20,000/month
-
-### 2. Digital Marketing & SEO
-- Complete Digital Marketing Solutions: Comprehensive strategies for online growth.  
-  - Estimated Price: ₹15,000 - ₹50,000/month
-- Search Engine Optimization (SEO): On-page, off-page, and technical SEO, including keyword research and competitor analysis.  
-  - Estimated Price: ₹10,000 - ₹40,000/month
-- Google Ads & PPC Campaigns: Targeted ad campaigns for maximum ROI.  
-  - Estimated Price: ₹10,000 - ₹50,000/month (excluding ad spend)
-- Social Media Marketing (SMM): Strategies for engagement and growth on platforms like Facebook, Instagram, and LinkedIn.  
-  - Estimated Price: ₹12,000 - ₹40,000/month
-- Email Marketing Campaigns: Personalized campaigns for lead nurturing.  
-  - Estimated Price: ₹8,000 - ₹25,000/month
-- Google Analytics & Search Console Setup: Data-driven insights for performance tracking.  
-  - Estimated Price: ₹5,000 - ₹15,000 (one-time setup)
-- Content Marketing Strategy: Blogs, videos, and infographics for brand visibility.  
-  - Estimated Price: ₹10,000 - ₹30,000/month
-- Local SEO: Optimizing for local search visibility.  
-  - Estimated Price: ₹8,000 - ₹25,000/month
-
-### 3. Social Media & Branding
-- Brand Identity Design & Development: Logos, color schemes, and branding guidelines.  
-  - Estimated Price: ₹15,000 - ₹50,000
-- Content Creation & Scheduling: Engaging posts for social media platforms.  
-  - Estimated Price: ₹10,000 - ₹30,000/month
-- Engagement & Follower Growth Strategies: Building a loyal audience.  
-  - Estimated Price: ₹12,000 - ₹35,000/month
-- Social Media Strategy Development: Tailored plans for brand growth.  
-  - Estimated Price: ₹10,000 - ₹30,000
-- Custom AI WhatsApp Bot Integration: Automated customer support and marketing.  
-  - Estimated Price: ₹20,000 - ₹80,000
-- Live Chat & Support Integration: Tools like LiveChat, Tawk.to for real-time support.  
-  - Estimated Price: ₹5,000 - ₹15,000 (setup)
-- Social Media Account Optimization: Enhancing profiles for better reach.  
-  - Estimated Price: ₹5,000 - ₹20,000
-
-### 4. Data & Analytics
-- Real-Time User Tracking & Analytics: Insights into user behavior.  
-  - Estimated Price: ₹10,000 - ₹30,000
-- Heatmaps & User Journey Tracking: Visualizing user interactions.  
-  - Estimated Price: ₹8,000 - ₹25,000
-- Data-Driven UX Improvements: Optimizing based on analytics.  
-  - Estimated Price: ₹15,000 - ₹50,000
-- Data Recovery: Restoring deleted or lost data.  
-  - Estimated Price: ₹10,000 - ₹50,000
-- Database Management & Optimization: Ensuring efficient data handling.  
-  - Estimated Price: ₹15,000 - ₹40,000
-
-### 5. Tech Support & Additional Services
-- Domain & Hosting Setup: Reliable hosting and domain management.  
-  - Estimated Price: ₹5,000 - ₹20,000/year
-- Website Speed Optimization: Improving load times for better UX.  
-  - Estimated Price: ₹5,000 - ₹20,000
-- SSL Setup & Security Enhancements: Securing websites with SSL and more.  
-  - Estimated Price: ₹3,000 - ₹15,000
-- App & Website Bug Fixing: Resolving technical issues.  
-  - Estimated Price: ₹5,000 - ₹25,000
-- 24/7 Tech Support Services: Round-the-clock assistance.  
-  - Estimated Price: ₹10,000 - ₹30,000/month
-- Custom CRM & ERP Solutions: Tailored business management systems.  
-  - Estimated Price: ₹50,000 - ₹3,00,000
-- Chatbot Integration: AI-powered and scripted chatbots.  
-  - Estimated Price: ₹20,000 - ₹80,000
-- Payment Gateway Integration: Stripe, Razorpay, PayPal, etc.  
-  - Estimated Price: ₹10,000 - ₹30,000
-- App & Web Performance Monitoring: Ensuring optimal performance.  
-  - Estimated Price: ₹8,000 - ₹25,000/month
-- Website Maintenance & Support Plans: Regular updates and support.  
-  - Estimated Price: ₹5,000 - ₹20,000/month
-
----
+Web & App Development: Custom websites/web apps (MERN/MEAN/PHP), mobile apps, e-commerce stores, CMS (WordPress/Joomla/Drupal), PWAs, API development, UI/UX design, website maintenance.
+Digital Marketing & SEO: SEO (on-page/off-page/technical), Google Ads & PPC, social media marketing, email campaigns, Google Analytics setup, content marketing, local SEO.
+Social Media & Branding: Brand identity design, content creation, social media growth strategies, AI WhatsApp bot integration, live chat integration, social media optimization.
+Data & Analytics: Real-time user tracking, heatmaps, UX improvements, data recovery, database management.
+Tech Support & Additional: Domain & hosting, website speed optimization, SSL & security, bug fixing, 24/7 support, custom CRM/ERP, chatbots, payment gateway integration, performance monitoring.
+Cybersecurity: Lost data recovery, DoS/DDoS protection, brute force protection, endpoint security, audits & compliance (ISO, GDPR), email/phishing protection, SSL/HTTPS setup, server hardening, dark web monitoring, incident response, secure backups, MFA/password policy, employee training, security monitoring (SIEM/logs), OWASP protection, cloud security (AWS/Azure/GCP).
+AI Instructions: Based on user queries, suggest only the relevant services. Include current market pricing when requested.
 
 ## Contact Us
-
 Reach out to us through multiple channels:
 - Phone: +91 96082 63050, +91 98018 28117, +91 7549200356
 - Email: contact@enegixwebsolutions.com, enegixglobal@gmail.com
-- Websites: [enegixwebsolutions.com](https://enegixwebsolutions.com/), [enegixglobal.com](https://enegixglobal.com/)
-- Contact Page: [Contact Us](https://enegixwebsolutions.com/contact/)
-- Social Media: @enegixglobal on [Instagram](https://www.instagram.com/enegixglobal/) and [LinkedIn](https://www.linkedin.com/company/enegixglobal/)
-- Office Hours: 10 AM - 7 PM, Monday to Saturday
-
----
+- Websites: enegixwebsolutions.com, enegixglobal.com
+- Contact Page: Contact Us: https://enegixwebsolutions.com/contact/
+- Social Media: @enegixglobal on Instagram: https://www.instagram.com/enegixglobal/ and LinkedIn: https://www.linkedin.com/company/enegixglobal/
+- Office Hours: 9:30 AM - 6:30 PM, Monday to Saturday
 
 ## Our Team
+🧑‍💻 Dev Team:
+Kunal Kumar Pandit – The mastermind behind our AI, automation, and bot solutions, with expertise since 2020.  
+Rajiv Kumar(Nextjs Dev), Vikky Kumar(React Native)
+😶‍🌫️ Interns of Dev Team:
+Tanweer Aman, MD Taslim
 
-We’re a passionate team of over 20 tech professionals, including developers, UI/UX designers, cloud architects, digital strategists, and marketing experts. Our key developers include:
-- Kunal Kumar Pandit: The mastermind behind our AI, automation, and bot solutions, with expertise since 2018.
-- Rajiv (aka Raju), Vikky,: Professional developers contributing to our innovative projects. Muskan serves as our HR and team lead.
+📊 Sales Team:  
+Yashshree, Huma, Shiffa, Ayesha, Veronika, Shivans
 
-Our team, with an average age of 20-35, is dynamic and driven by a passion for technology. We’re currently hiring talented developers and tech professionals! Explore our team: [Team Page](https://enegixwebsolutions.com/team/).
+👩‍💼 Team Lead (All Departments): Muskan
+
+
+
+Our team, with an average age of 20-30, is dynamic and driven by a passion for technology. We’re currently hiring talented developers and tech professionals! Explore our team: Team Page: https://enegixwebsolutions.com/team/ .
 
 ---
 
 ## Our Founders
 
 - Ehtesham Raghib: Founder of EnegiX Web Solutions, Ehtesham is a visionary entrepreneur and digital strategist with expertise in web development, digital marketing, and brand growth. He has transformed EnegiX into a full-service digital agency, helping businesses establish a strong online presence.  
-  - Connect: [Facebook](https://www.facebook.com/Imthepatientwolf), [LinkedIn](https://www.linkedin.com/in/ehtesham-raghib-9b5b6b201/)
+  - Connect: Facebook: https://www.facebook.com/Imthepatientwolf , LinkedIn: https://www.linkedin.com/in/ehtesham-raghib-9b5b6b201/
 - Shreya Raj: Co-founder of EnegiX Web Solutions, Shreya is a creative strategist with a focus on brand development and digital marketing. Her ability to blend aesthetics with functionality ensures visually stunning and effective solutions.  
-  - Connect: [Facebook](https://www.facebook.com/people/Potacium-Pandey/pfbid02JaoBn22V4t5PBKoioAM8cd4qHw5oz4etDjY6Ykwvsv12NBaDX8z28mBZf2Pcy96ul/), [Instagram](https://www.instagram.com/potaciumpandey/), [LinkedIn](https://www.linkedin.com/in/shreya-raj-75569a34b/), [YouTube](https://www.youtube.com/@PotaciumPandey)
+  - Connect: Facebook https://www.facebook.com/people/Potacium-Pandey/pfbid02JaoBn22V4t5PBKoioAM8cd4qHw5oz4etDjY6Ykwvsv12NBaDX8z28mBZf2Pcy96ul/ , Instagram: https://www.instagram.com/potaciumpandey/ , LinkedIn: https://www.linkedin.com/in/shreya-raj-75569a34b/ , YouTube: https://www.youtube.com/@PotaciumPandey
 
 ---
 
