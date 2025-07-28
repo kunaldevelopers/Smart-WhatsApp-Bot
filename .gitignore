@@ -20,10 +20,13 @@ yarn-error.log*
 app.log
 queries.log
 
-# WhatsApp session data
+# WhatsApp session data (IMPORTANT: Keep this secure!)
 .wwebjs_auth/
 .wwebjs_cache/
-.wwebjs_auth/session
+.wwebjs_auth/**
+.wwebjs_cache/**
+session/
+**/session/**
 
 # OS generated files
 .DS_Store
