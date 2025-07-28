@@ -51,6 +51,18 @@
                 <li>Scan this QR code</li>
               </ol>
             </div>
+            <div class="reset-section">
+              <button
+                class="reset-btn"
+                id="resetBtn"
+                onclick="window.botUI.resetSession()"
+              >
+                🔄 Reset Session
+              </button>
+              <p class="reset-info">
+                Clear current session and generate new QR code
+              </p>
+            </div>
           </div>
         </div>
 
@@ -74,6 +86,18 @@
                 <span class="label">Session:</span>
                 <span class="value">🔒 Secured</span>
               </div>
+            </div>
+            <div class="reset-section">
+              <button
+                class="reset-btn"
+                id="resetBtnSuccess"
+                onclick="window.botUI.resetSession()"
+              >
+                🔄 Reset & Reconnect
+              </button>
+              <p class="reset-info">
+                Switch to different WhatsApp account or refresh session
+              </p>
             </div>
           </div>
         </div>

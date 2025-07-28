@@ -66,6 +66,42 @@ app.get("/api/test-qr", (req, res) => {
   });
 });
 
+// Reset session endpoint
+app.post("/api/reset-session", async (req, res) => {
+  try {
+    console.log(
+      chalk.yellow("[Reset] Session reset requested via web interface")
+    );
+    addWebLog("warning", "Session reset requested by user");
+
+    // Reset bot status
+    botStatus.status = "initializing";
+    botStatus.qr = null;
+    botStatus.authenticated = false;
+    botStatus.ready = false;
+    qrGenerated = false;
+
+    // Clear session and restart
+    await clearSessionAndRestart();
+
+    res.json({
+      success: true,
+      message:
+        "Session reset initiated. New QR code will be generated shortly.",
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error(chalk.red("[Reset Error]"), error.message);
+    addWebLog("error", "Failed to reset session: " + error.message);
+
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
 // Helper function to add logs
 function addWebLog(level, message) {
   const logEntry = {
@@ -538,25 +574,62 @@ Respond to the latest question using EnegiX Global data only.`;
 async function clearSessionAndRestart() {
   try {
     console.log(chalk.yellow("[Cleanup] Destroying current client..."));
-    await client.destroy();
+
+    // Try to destroy client gracefully, but don't fail if it's already destroyed
+    try {
+      if (client && typeof client.destroy === "function") {
+        await client.destroy();
+      }
+    } catch (destroyError) {
+      console.log(
+        chalk.gray(
+          "[Cleanup] Client already destroyed or error:",
+          destroyError.message
+        )
+      );
+    }
 
     console.log(chalk.yellow("[Cleanup] Clearing session data..."));
     // Clear session files
     const sessionPath = "./.wwebjs_auth";
     if (fs.existsSync(sessionPath)) {
-      fs.rmSync(sessionPath, { recursive: true, force: true });
-      console.log(chalk.green("[Cleanup] Session data cleared"));
+      try {
+        fs.rmSync(sessionPath, { recursive: true, force: true });
+        console.log(chalk.green("[Cleanup] Session data cleared"));
+      } catch (fsError) {
+        console.log(
+          chalk.yellow(
+            "[Cleanup] Warning: Could not clear some session files:",
+            fsError.message
+          )
+        );
+      }
     }
 
-    // Wait a bit then restart
-    console.log(chalk.cyan("[Restart] Restarting bot with fresh session..."));
-    setTimeout(() => {
-      process.exit(0); // Let the process manager restart the app
-    }, 2000);
+    // Reset bot status immediately for web interface
+    botStatus.status = "initializing";
+    botStatus.qr = null;
+    botStatus.authenticated = false;
+    botStatus.ready = false;
+    qrGenerated = false;
+    addWebLog("info", "Session cleared, reinitializing...");
+
+    // Wait a bit then reinitialize instead of restarting process
+    console.log(chalk.cyan("[Restart] Reinitializing WhatsApp client..."));
+    setTimeout(async () => {
+      try {
+        await initializeClient();
+      } catch (initError) {
+        console.error(chalk.red("[Init Error]"), initError.message);
+        addWebLog("error", "Failed to reinitialize: " + initError.message);
+      }
+    }, 3000);
   } catch (error) {
     logger.error(`Error clearing session: ${error.message}`);
     console.error(chalk.red.bold(`[Cleanup Error] ${error.message}`));
-    process.exit(1);
+
+    // Don't exit the process, just log the error and try to continue
+    addWebLog("error", "Session reset failed: " + error.message);
   }
 }
 

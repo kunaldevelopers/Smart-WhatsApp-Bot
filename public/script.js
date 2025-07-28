@@ -296,6 +296,79 @@ class WhatsAppBotUI {
     }
   }
 
+  async resetSession() {
+    // Disable reset button to prevent multiple clicks
+    const resetBtns = document.querySelectorAll(".reset-btn");
+    resetBtns.forEach((btn) => {
+      btn.disabled = true;
+      btn.textContent = "🔄 Resetting...";
+    });
+
+    this.addLog("warning", "Resetting WhatsApp session...");
+
+    try {
+      // Call the reset API endpoint
+      const response = await fetch("/api/reset-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        this.addLog("success", "Session reset successfully");
+        this.addLog("info", "Please wait for new QR code...");
+
+        // Reset UI state
+        this.qrCodeGenerated = false;
+        this.connectionTime = null;
+
+        // Hide success section and show status card
+        const statusCard = document.getElementById("statusCard");
+        const qrSection = document.getElementById("qrSection");
+        const successSection = document.getElementById("successSection");
+
+        successSection.style.display = "none";
+        qrSection.style.display = "none";
+        statusCard.style.display = "block";
+
+        // Update status
+        this.updateStatus(
+          "loading",
+          "Resetting Session...",
+          "Clearing old session and generating new QR code."
+        );
+
+        // Start polling again for new QR
+        setTimeout(() => {
+          this.updateStatus(
+            "loading",
+            "Initializing...",
+            "Setting up new WhatsApp connection."
+          );
+          this.startStatusPolling();
+        }, 2000);
+      } else {
+        throw new Error("Reset request failed");
+      }
+    } catch (error) {
+      console.error("Reset error:", error);
+      this.addLog("error", "Failed to reset session: " + error.message);
+    } finally {
+      // Re-enable reset buttons
+      setTimeout(() => {
+        resetBtns.forEach((btn) => {
+          btn.disabled = false;
+          btn.innerHTML =
+            btn.id === "resetBtnSuccess"
+              ? "🔄 Reset & Reconnect"
+              : "🔄 Reset Session";
+        });
+      }, 3000);
+    }
+  }
+
   addLog(level, message) {
     const logsContainer = document.getElementById("logsContainer");
     const timestamp = new Date().toLocaleTimeString();
