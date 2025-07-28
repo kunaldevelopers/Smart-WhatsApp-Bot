@@ -9,10 +9,64 @@ dotenv.config();
 // Other imports
 import fetch from "node-fetch";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import http from "http";
+import express from "express";
 import qrcode from "qrcode-terminal";
 import chalk from "chalk";
 import ora from "ora";
 import winston from "winston";
+
+// ES module dirname equivalent
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Express app setup
+const app = express();
+const server = http.createServer(app);
+const PORT = process.env.PORT || 3000;
+
+// Bot status for web interface
+let botStatus = {
+  status: "initializing",
+  qr: null,
+  authenticated: false,
+  ready: false,
+  logs: [],
+};
+
+// Middleware
+app.use(express.json());
+app.use(express.static("public"));
+
+// Routes
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/api/status", (req, res) => {
+  res.json(botStatus);
+});
+
+app.get("/api/auth-status", (req, res) => {
+  res.json({ authenticated: botStatus.authenticated });
+});
+
+// Helper function to add logs
+function addWebLog(level, message) {
+  const logEntry = {
+    level,
+    message,
+    timestamp: new Date().toISOString(),
+  };
+  botStatus.logs.push(logEntry);
+
+  // Keep only last 50 logs
+  if (botStatus.logs.length > 50) {
+    botStatus.logs = botStatus.logs.slice(-50);
+  }
+}
 
 // Google Gemini API configuration
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -108,16 +162,21 @@ const client = new Client({
 client.on("qr", (qr) => {
   console.log(chalk.cyan.bold("[QR] Scan this to Connect:"));
   console.log(
-    chalk.yellow(
-      "[Info] If QR doesn't appear, check terminal size or use a QR scanner app"
-    )
+    chalk.yellow("[Info] QR Code available at: http://localhost:" + PORT)
   );
   qrcode.generate(qr, { small: true });
+
+  // Update bot status for web interface
+  botStatus.status = "qr_ready";
+  botStatus.qr = qr;
+  addWebLog("info", "QR code generated successfully");
+  addWebLog("info", `Web interface available at: http://localhost:${PORT}`);
 });
 
 // Loading session
 client.on("loading_screen", (percent, message) => {
   console.log(chalk.blue(`[Loading] ${percent}% - ${message}`));
+  addWebLog("info", `Loading: ${percent}% - ${message}`);
 });
 
 // Authentication failure - regenerate QR
@@ -128,6 +187,11 @@ client.on("auth_failure", (msg) => {
     chalk.yellow("[Action] Clearing session and regenerating QR code...")
   );
 
+  // Update bot status
+  botStatus.status = "auth_failure";
+  botStatus.authenticated = false;
+  addWebLog("error", "Authentication failed - clearing session");
+
   // Clear the session and restart
   setTimeout(async () => {
     try {
@@ -137,6 +201,7 @@ client.on("auth_failure", (msg) => {
       console.error(
         chalk.red.bold("[Error] Failed to clear session, restarting...")
       );
+      addWebLog("error", "Failed to clear session");
       process.exit(1);
     }
   }, 2000);
@@ -145,12 +210,20 @@ client.on("auth_failure", (msg) => {
 // Authenticated
 client.on("authenticated", () => {
   console.log(chalk.green.bold("[Connected] WhatsApp Session Saved!"));
+  botStatus.status = "authenticated";
+  botStatus.authenticated = true;
+  addWebLog("success", "WhatsApp authentication successful");
 });
 
 // Ready
 client.on("ready", () => {
   console.log(chalk.blue.bold("[Ready] Bot is Online and Ready!"));
   console.log(chalk.green("✅ WhatsApp connection established successfully"));
+  console.log(chalk.cyan(`🌐 Web interface: http://localhost:${PORT}`));
+
+  botStatus.status = "ready";
+  botStatus.ready = true;
+  addWebLog("success", "Bot is online and ready to receive messages");
 });
 
 // Handle disconnects with better error handling
@@ -654,5 +727,14 @@ if (!fs.existsSync(dataFileName)) {
 
 console.log(chalk.green("✅ [Config] Configuration validated successfully"));
 console.log(chalk.blue("🔌 [WhatsApp] Connecting to WhatsApp Web..."));
+
+// Start web server
+server.listen(PORT, () => {
+  console.log(
+    chalk.magenta(`🌐 [Web] Server running at http://localhost:${PORT}`)
+  );
+  addWebLog("info", `Web server started on port ${PORT}`);
+  addWebLog("info", "Initializing WhatsApp client...");
+});
 
 initializeClient();

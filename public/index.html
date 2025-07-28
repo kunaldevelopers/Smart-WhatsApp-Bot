@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhatsApp Bot - QR Authentication</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <h1>🤖 Smart WhatsApp Bot</h1>
+          <p>AI-Powered Business Assistant</p>
+        </div>
+      </header>
+
+      <main>
+        <div class="status-card" id="statusCard">
+          <div class="status-header">
+            <div class="status-indicator" id="statusIndicator">
+              <div class="pulse"></div>
+            </div>
+            <h2 id="statusTitle">Initializing Bot...</h2>
+          </div>
+          <p id="statusMessage">
+            Please wait while we set up your WhatsApp connection.
+          </p>
+        </div>
+
+        <div class="qr-section" id="qrSection" style="display: none">
+          <div class="qr-card">
+            <h3>📱 Scan QR Code</h3>
+            <p>Open WhatsApp on your phone and scan this QR code:</p>
+            <div class="qr-container">
+              <div id="qrcode"></div>
+              <div class="qr-loading" id="qrLoading">
+                <div class="spinner"></div>
+                <p>Generating QR Code...</p>
+              </div>
+            </div>
+            <div class="instructions">
+              <ol>
+                <li>Open WhatsApp on your phone</li>
+                <li>Tap Menu (⋮) → Linked Devices</li>
+                <li>Tap "Link a Device"</li>
+                <li>Scan this QR code</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="success-section" id="successSection" style="display: none">
+          <div class="success-card">
+            <div class="success-icon">✅</div>
+            <h3>Connected Successfully!</h3>
+            <p>
+              Your WhatsApp bot is now online and ready to receive messages.
+            </p>
+            <div class="bot-info">
+              <div class="info-item">
+                <span class="label">Status:</span>
+                <span class="value online">🟢 Online</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Connected:</span>
+                <span class="value" id="connectionTime">Just now</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Session:</span>
+                <span class="value">🔒 Secured</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="logs-section">
+          <h3>📋 System Logs</h3>
+          <div class="logs-container" id="logsContainer">
+            <div class="log-entry info">
+              <span class="timestamp" id="initialTimestamp"></span>
+              <span class="message">Bot initialization started...</span>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; 2025 Smart WhatsApp Bot | Powered by Google Gemini AI</p>
+      </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

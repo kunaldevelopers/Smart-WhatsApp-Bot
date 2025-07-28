@@ -8,3 +8,4 @@ restartPolicyMaxRetries = 10
 
 [environment]
 NODE_ENV = "production"
+PORT = "${{PORT}}"
