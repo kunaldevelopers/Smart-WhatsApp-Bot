@@ -6,13 +6,41 @@
 # Last updated: July 2025
 # =============================================================================
 
+# Environment variables
+.env
+
 # Node.js dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Logs
+*.log
+app.log
+queries.log
+
+# WhatsApp session data
+.wwebjs_auth/
+.wwebjs_cache/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+
 # =============================================================================
-# REMINDER: Move your Gemini API key from index2.js to .env file for security!
-# Example: GEMINI_API_KEY=your_api_key_here
+# SECURITY NOTE: .env file is now used for storing sensitive data like API keys
+# Make sure to copy .env.example to .env and add your actual API keys
 # =============================================================================

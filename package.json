@@ -2,13 +2,14 @@
   "name": "my-local-ai",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "@langchain/community": "^0.3.39",
     "chalk": "^5.4.1",
+    "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
     "langchain": "^0.3.20",
     "node-fetch": "^3.3.2",
