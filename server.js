@@ -161,16 +161,21 @@ const client = new Client({
 // Show QR code
 client.on("qr", (qr) => {
   console.log(chalk.cyan.bold("[QR] Scan this to Connect:"));
-  console.log(
-    chalk.yellow("[Info] QR Code available at: http://localhost:" + PORT)
-  );
+
+  // Show the correct URL based on environment
+  const webUrl = process.env.RAILWAY_PUBLIC_DOMAIN
+    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+    : `http://localhost:${PORT}`;
+  console.log(chalk.yellow(`[Info] QR Code available at: ${webUrl}`));
+  console.log(chalk.magenta.bold(`🌐 SCAN HERE: ${webUrl}`));
+
   qrcode.generate(qr, { small: true });
 
   // Update bot status for web interface
   botStatus.status = "qr_ready";
   botStatus.qr = qr;
   addWebLog("info", "QR code generated successfully");
-  addWebLog("info", `Web interface available at: http://localhost:${PORT}`);
+  addWebLog("info", `Web interface available at: ${webUrl}`);
 });
 
 // Loading session
@@ -219,7 +224,12 @@ client.on("authenticated", () => {
 client.on("ready", () => {
   console.log(chalk.blue.bold("[Ready] Bot is Online and Ready!"));
   console.log(chalk.green("✅ WhatsApp connection established successfully"));
-  console.log(chalk.cyan(`🌐 Web interface: http://localhost:${PORT}`));
+
+  // Show the correct URL based on environment
+  const webUrl = process.env.RAILWAY_PUBLIC_DOMAIN
+    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+    : `http://localhost:${PORT}`;
+  console.log(chalk.cyan(`🌐 Web interface: ${webUrl}`));
 
   botStatus.status = "ready";
   botStatus.ready = true;
@@ -730,9 +740,18 @@ console.log(chalk.blue("🔌 [WhatsApp] Connecting to WhatsApp Web..."));
 
 // Start web server
 server.listen(PORT, () => {
-  console.log(
-    chalk.magenta(`🌐 [Web] Server running at http://localhost:${PORT}`)
-  );
+  const webUrl = process.env.RAILWAY_PUBLIC_DOMAIN
+    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+    : `http://localhost:${PORT}`;
+
+  console.log(chalk.magenta(`🌐 [Web] Server running at ${webUrl}`));
+  if (process.env.RAILWAY_PUBLIC_DOMAIN) {
+    console.log(chalk.yellow.bold(`🎯 RAILWAY URL: ${webUrl}`));
+    console.log(
+      chalk.green.bold(`📱 Open this URL to scan QR code: ${webUrl}`)
+    );
+  }
+
   addWebLog("info", `Web server started on port ${PORT}`);
   addWebLog("info", "Initializing WhatsApp client...");
 });
