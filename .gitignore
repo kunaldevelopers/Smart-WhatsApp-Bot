@@ -23,6 +23,7 @@ queries.log
 # WhatsApp session data
 .wwebjs_auth/
 .wwebjs_cache/
+.wwebjs_auth/session
 
 # OS generated files
 .DS_Store
