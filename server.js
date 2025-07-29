@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Other imports
-import fetch from "node-fetch";
+import Together from "together-ai";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -117,15 +117,16 @@ function addWebLog(level, message) {
   }
 }
 
-// Google Gemini API configuration
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_ENDPOINT = process.env.GEMINI_ENDPOINT;
+// Together AI configuration
+const together = new Together({
+  apiKey: process.env.TOGETHER_API_KEY,
+});
 
 // Validate required environment variables
-if (!GEMINI_API_KEY) {
+if (!process.env.TOGETHER_API_KEY) {
   console.error(
     chalk.red.bold(
-      "[Error] GEMINI_API_KEY is required! Please set it in your .env file."
+      "[Error] TOGETHER_API_KEY is required! Please set it in your .env file."
     )
   );
   process.exit(1);
@@ -492,27 +493,23 @@ Recent conversation: ${recentConversation
 Respond to the latest question using EnegiX Global data only.`;
 
     const requestBody = {
-      contents: [{ parts: [{ text: systemPrompt }] }],
-      generationConfig: {
-        temperature: parseFloat(process.env.AI_TEMPERATURE) || 0.7,
-        maxOutputTokens: parseInt(process.env.AI_MAX_OUTPUT_TOKENS) || 2000, // Reduced for faster response
-        candidateCount: 1,
-      },
+      messages: [
+        {
+          role: "user",
+          content: systemPrompt,
+        },
+      ],
+      model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+      temperature: parseFloat(process.env.AI_TEMPERATURE) || 0.7,
+      max_tokens: parseInt(process.env.AI_MAX_OUTPUT_TOKENS) || 2000,
     };
 
-    const aiResponse = await fetchWithRetry(
-      `${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      }
-    );
+    const aiResponse = await together.chat.completions.create(requestBody);
     const analyzeTime = Date.now();
 
     // Step 3: Formatting
     spinner.text = chalk.magenta("[AI] Crafting Response...");
-    let responseText = aiResponse.candidates[0].content.parts[0].text.trim();
+    let responseText = aiResponse.choices[0].message.content.trim();
 
     // Apply formatting
     responseText = formatResponse(responseText);
@@ -562,7 +559,7 @@ Respond to the latest question using EnegiX Global data only.`;
     processingUsers.delete(userId);
 
     logger.error(`Error processing message from ${msg.from}: ${err.message}`);
-    console.error(chalk.red.bold(`[Error] Gemini API Error: ${err.message}`));
+    console.error(chalk.red.bold(`[Error] Together AI Error: ${err.message}`));
     await safeReply(
       msg,
       "😓 *Oops!* Something went wrong with our AI service. Try again later! 🙏"
@@ -668,40 +665,20 @@ async function safeReply(msg, text) {
   }
 }
 
-async function fetchWithRetry(
-  url,
-  options,
-  retries = parseInt(process.env.FETCH_RETRIES) || 2,
-  delay = parseInt(process.env.FETCH_RETRY_DELAY) || 500
-) {
-  for (let i = 0; i < retries; i++) {
-    try {
-      const res = await fetch(url, options);
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(
-          `HTTP ${res.status}: ${errorData.error?.message || "Unknown error"}`
-        );
-      }
-      const data = await res.json();
-
-      // Check if Gemini API returned an error
-      if (data.error) {
-        throw new Error(`Gemini API error: ${data.error.message}`);
-      }
-
-      return data;
-    } catch (err) {
-      if (i === retries - 1) throw err;
-      logger.warn(`Fetch attempt ${i + 1} failed: ${err.message}`);
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
-  }
+async function fetchWithRetry(url, options, retries = 2, delay = 500) {
+  // This function is no longer used with Together AI
+  // Keeping for backward compatibility if needed elsewhere
+  console.warn("[Warning] fetchWithRetry is deprecated with Together AI");
+  throw new Error("fetchWithRetry is not supported with Together AI");
 }
 
 function formatResponse(text) {
   return (
     text
+      // Remove thinking tokens from Qwen model (everything between <think> and </think>)
+      .replace(/<think>[\s\S]*?<\/think>/gi, "")
+      // Remove any remaining thinking markers
+      .replace(/<\/?think>/gi, "")
       // Convert double asterisks to single asterisks for WhatsApp bold
       .replace(/\*\*(.*?)\*\*/g, "*$1*")
       // Convert double underscores to single underscores for WhatsApp italic
@@ -807,7 +784,7 @@ console.log(chalk.yellow.bold("🚀 [Start] Launching EnegiX Global Bot..."));
 console.log(chalk.cyan("📋 [Config] Validating configuration..."));
 
 // Validate environment
-const requiredVars = ["GEMINI_API_KEY"];
+const requiredVars = ["TOGETHER_API_KEY"];
 const missingVars = requiredVars.filter((varName) => !process.env[varName]);
 
 if (missingVars.length > 0) {

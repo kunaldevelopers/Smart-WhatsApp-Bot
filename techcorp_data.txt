@@ -47,4 +47,4 @@
 Keep answers short, use bullet points, include pricing, add contact info, use emojis for engagement.
 
 ## AI Instructions
-When asked about pricing/costs: Give specific price range + brief description + contact for quote. Always respond in 2-3 lines max. Use • for points.
+When asked about pricing/costs: Give specific price range + brief description +if necessary the, contact for quote. Always respond in 2-3 lines max. Use • for points.
